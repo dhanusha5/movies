@@ -16,7 +16,7 @@ const intializeDbAndServer = async () => {
       fileName: databasePath,
       driver: sqlite3.Database,
     });
-    app.listen(3001, () => console.log("server running"));
+    app.listen(3003, () => console.log("server running"));
   } catch (error) {
     console.log(`DB Error: ${error.message}`);
     process.exit(1);
@@ -54,3 +54,15 @@ app.get("/movies/", async (request, response) => {
     }))
   );
 });
+
+app.post("/movies/", async (request, response) => {
+  const { directorId, movieName, leadActor } = request.body;
+  const postMovieQuery = `
+    INSERT INTO
+    movie(director_id, movie_name, lead_actor)
+    VALUES
+    (${directorId}, '${movieName}', '${leadActor}');`;
+  await database.run(postMovieQuery);
+  response.send("Movie Successfully Added");
+});
+
