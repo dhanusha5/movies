@@ -66,3 +66,4 @@ app.post("/movies/", async (request, response) => {
   response.send("Movie Successfully Added");
 });
 
+module.exports = app;
